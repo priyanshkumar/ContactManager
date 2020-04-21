@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const ConnectDB = require ('./config/db')
+const connectDB = require ('./config/db')
 
 // Creating express server
 const app = express();
@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json({ extended: false }));
 
 // Connection DB
-// ConnectDB();
+connectDB();
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Welcome to ContactKeeper API...' });
