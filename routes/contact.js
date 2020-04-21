@@ -27,15 +27,20 @@ router.post('/', [
       .isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
   ], async (req ,res)=>{
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
     
     const { firstName, lastName, email, phone} = req.body;
 
     try {
-      const newContact = new Contact({
+    const contactCheck = await Contact.find({ email });
+    if(contactCheck.length !== 0){
+        return res.status(400).json({ msg: 'Email already exists', contact: contactCheck });
+    }
+
+    const newContact = new Contact({
         firstName,
         lastName,
         email,
@@ -55,7 +60,7 @@ router.post('/', [
 // @route PUT contacts/:id
 // @desc Get all contacts from db    
 // @access Public
-router.put('/', async (req,res)=>{
+router.put('/:id', async (req,res)=>{
     const { firstName, lastName, email, phone} = req.body;
 
     const contactFields = {};
@@ -88,7 +93,7 @@ router.put('/', async (req,res)=>{
 // @route DELETE contacts/:id
 // @desc Get all contacts from db    
 // @access Public
-router.delete('/', async (req,res)=>{
+router.delete('/:id', async (req,res)=>{
     try {
         let contact = await Contact.findById(req.params.id);
     
