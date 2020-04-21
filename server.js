@@ -9,7 +9,11 @@ const app = express();
 app.use(express.json({ extended: false }));
 
 // Connection DB
-ConnectDB();
+// ConnectDB();
+
+app.get('/', (req, res) => {
+  res.json({ msg: 'Welcome to ContactKeeper API...' });
+});
 
 app.use('/contacts', require('./routes/contact'));
 

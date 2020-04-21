@@ -11,7 +11,7 @@ router.get('/', (req,res)=>{
 // @route POST contacts
 // @desc Add new contact  
 // @access Public
-router.post('/', (req,res)=>{
+router.post('/', (req ,res)=>{
     res.send("Reach add");
 });
 
@@ -26,6 +26,6 @@ router.put('/', (req,res)=>{
 // @desc Get all contacts from db    
 // @access Public
 router.delete('/', (req,res)=>{
-    res.send("Reach put");
+    res.send("Reach delete");
 });
 module.exports = router;
